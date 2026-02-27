@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { GetLessons } from "../actions";
 import ReactPlayer from "react-player";
 import { Topic } from '../../components/Topic/Topic';
@@ -17,7 +17,7 @@ const inter = Inter({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 });
 
-export default function page() {
+function LessonContent() {
 
   const [Lessons,setLessons] = useState()
   const [Link, setLink] = useState()
@@ -154,5 +154,13 @@ export default function page() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function page() {
+  return (
+    <Suspense fallback={<div className="page-min-h flex items-center justify-center text-white">Loading...</div>}>
+      <LessonContent />
+    </Suspense>
   );
 }
